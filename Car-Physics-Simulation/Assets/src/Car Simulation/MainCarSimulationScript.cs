@@ -13,28 +13,47 @@ public class MainCarSimulationScript : MonoBehaviour {
     private Vector3 Fdrag; //Air resistance
     private Vector3 Frr; //Rolling resistance
     private Vector3 Flong; //The total longtitudinal force
+    private Vector3 Fbraking; //Braking force
     public float var_EngineForce;
     private float _var_EngineForce;
+    private bool var_isBraking; 
     private float cnst_Cdrag; //Air resistance constant
     private float cnst_Crr; //Rolling resisteance constant
-    
+    public float cnst_Cbraking; //Braking constant
     public void FixedUpdate() {
-        var x = Input.GetAxis("Horizontal");
-        var z = 1 - x * x;
+        var x = Mathf.Clamp(Input.GetAxis("Horizontal"), -0.85f, 0.85f);
+        var z = Mathf.Clamp(1 - x * x, -0.85f, 0.85f);
 
         var u = new Vector3(x, 0, z);
         u = u.normalized;
-        
+
         var velocity = cmp_rb.velocity;
 
-        //Calculation of forces 
+        //Calculation of forces
         _var_EngineForce = var_EngineForce * Input.GetAxis("Vertical");
+
         Ftraction = _var_EngineForce * u;
         Fdrag     = -cnst_Cdrag * velocity * velocity.magnitude; 
         Frr       = -cnst_Crr * velocity;
 
-        Flong = Ftraction + Fdrag + Frr;
+        ApplyBrakes(u);
+
+        if (var_isBraking && cmp_rb.velocity.magnitude > 0)
+            Flong = Ftraction + Fdrag + Frr + Fbraking;
+        else
+            Flong = Ftraction + Fdrag + Frr;
 
         cmp_rb.AddForce(Flong);
+    }
+
+    public void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) var_isBraking = true;
+        if (Input.GetKeyUp(KeyCode.Space))   var_isBraking = false;
+    }
+
+    private void ApplyBrakes(Vector3 u) {
+        var velocityClamped = Mathf.Clamp(cmp_rb.velocity.magnitude, 0, 1);
+
+        Fbraking = velocityClamped * (-u * cnst_Cbraking);
     }
 }
