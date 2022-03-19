@@ -39,7 +39,6 @@ public class MainCarSimulationScript : MonoBehaviour {
     private Vector3 Frr; //Rolling resistance
     private Vector3 Fbraking; //Braking force
     private Vector3 Flong; //The total longtitudinal force
-    private Vector3 Flateral; //The lateral force
     public float var_EngineForce;
     private float _var_EngineForce;
     private bool var_isBraking;
@@ -111,7 +110,6 @@ public class MainCarSimulationScript : MonoBehaviour {
         "Rolling Resistance: " + Frr + "\n" + 
         "Braking: " + Fbraking + "\n" +
         "Longitudinal: " + Flong + "\n" +
-        "Lateral: " + Flateral + "\n" +
         "Engine force (N): " + _var_EngineForce + "\n" +
         "Is Braking (T/F): " + var_isBraking + "\n" +
         "Horizontal: " + Input.GetAxis("Horizontal").ToString("0.00") + "\n" +
