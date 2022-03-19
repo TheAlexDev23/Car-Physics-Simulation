@@ -49,6 +49,7 @@ public class MainCarSimulationScript : MonoBehaviour {
     private void SimulatePhyisics() {
         var u = transform.forward; 
         var velocity = cmp_rb.velocity;
+        var localVel = transform.InverseTransformDirection(velocity);
 
         //Calculation of forces
         _var_EngineForce = var_EngineForce * Input.GetAxis("Vertical");
@@ -57,11 +58,18 @@ public class MainCarSimulationScript : MonoBehaviour {
         Fdrag     = -cnst_Cdrag * velocity * velocity.magnitude; 
         Frr       = -cnst_Crr * velocity;
 
+        /*
         if(var_isBraking)
-            Fbraking  = -u * cnst_Cbraking * Mathf.Clamp(cmp_rb.velocity.magnitude, 0, 1);
+            Fbraking  = -u * cnst_Cbraking * Mathf.Clamp(localVel.z, 0, 1);
         else 
             Fbraking = Vector3.zero;
+        */
 
+        if(var_isBraking)
+            Fbraking  = -cmp_rb.velocity / 5 * cnst_Cbraking * Mathf.Clamp(cmp_rb.velocity.magnitude, 0, 1);
+        else 
+            Fbraking = Vector3.zero;
+        
         Flong = Ftraction + Fdrag + Frr + Fbraking;
 
         if(Input.GetAxis("Horizontal") != 0) cmp_rb.AddForce(go_wheelsGameObjects[3].transform.forward * _var_EngineForce + Frr);
