@@ -6,8 +6,14 @@ public class MainCarSimulationScript : MonoBehaviour {
     private Rigidbody cmp_rb;
     public void Start() {
         cmp_rb = GetComponent<Rigidbody>();
-        cnst_Cdrag = 0.4257f; //TODO: Add explanation to this value
-        cnst_Crr   = 12.8f; //TODO: Add explanation to this value
+        
+        /*Air density (rho) is 1.29 kg/m3 (0.0801 lb-mass/ft3), 
+        frontal area is approx. 2.2 m2 (20 sq. feet), 
+        Coefficient of friction depends on the shape of the car and determined via wind tunnel tests.  
+        Approximate value for a Corvette: 0.30
+        */
+        cnst_Cdrag = 0.4257f; //0.5 * 0.30 * 2.2 * 1.29.  
+        cnst_Crr   = 12.8f;   //30 * Cdrag
 
         GetWheels();
     }
@@ -23,7 +29,6 @@ public class MainCarSimulationScript : MonoBehaviour {
     }
 
     public void FixedUpdate() {
-        SimulateRotation();
         SimulatePhyisics();
     }
 
