@@ -35,7 +35,7 @@ public class MainCarSimulationScript : MonoBehaviour {
     private Vector3 Flateral; //The lateral force
     public float var_EngineForce;
     private float _var_EngineForce;
-    private bool var_isBraking; 
+    private bool var_isBraking;
     private float cnst_Cdrag; //Air resistance constant
     private float cnst_Crr; //Rolling resisteance constant
     public float cnst_Cbraking; //Braking constant
@@ -58,7 +58,7 @@ public class MainCarSimulationScript : MonoBehaviour {
 
         Flong = Ftraction + Fdrag + Frr + Fbraking;
 
-        cmp_rb.AddForce(go_wheelsGameObjects[3].transform.forward * _var_EngineForce + Frr);
+        if(Input.GetAxis("Horizontal") != 0) cmp_rb.AddForce(go_wheelsGameObjects[3].transform.forward * _var_EngineForce + Frr);
         cmp_rb.AddForce(Flong);
     }
 
@@ -99,9 +99,18 @@ public class MainCarSimulationScript : MonoBehaviour {
         if (Input.GetAxis("Horizontal") > 0) angleMultiplier = 1;
 
         var _angle = Vector3.Angle(transform.forward, go_wheelsGameObjects[3].transform.forward) * angleMultiplier;
+        
+        //var _angle = Vector3.Angle(transform.forward, cmp_rb.velocity) * angleMultiplier;
+        
         var rotationVector = new Vector3(0, _angle, 0);
 
-        transform.Rotate(rotationVector * Time.deltaTime);
+        float speedRotationMultiplier = 0;
+
+        if (cmp_rb.velocity.magnitude > 3) speedRotationMultiplier = 1.5f;
+        if (cmp_rb.velocity.magnitude > 45) speedRotationMultiplier = 1f;
+        if (cmp_rb.velocity.magnitude > 90) speedRotationMultiplier = .5f;
+
+        transform.Rotate(rotationVector * Time.deltaTime * speedRotationMultiplier);
     }
 
     private void UpdateWheelAngle() {
@@ -122,19 +131,19 @@ public class MainCarSimulationScript : MonoBehaviour {
     private void UpdateDebugInfo() {
         var text = GameObject.Find("Canvas").transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
 
-        text.text = "Forces:\n" + 
+        text.text = 
         "Traction: " + Ftraction + "\n" +
         "Drag: " + Fdrag + "\n" +
         "Rolling Resistance: " + Frr + "\n" + 
         "Braking: " + Fbraking + "\n" +
-        "Total Forces: \n" +
         "Longitudinal: " + Flong + "\n" +
         "Lateral: " + Flateral + "\n" +
-        "Other values: \n" +
         "Engine force (N): " + _var_EngineForce + "\n" +
         "Is Braking (T/F): " + var_isBraking + "\n" +
         "Horizontal: " + Input.GetAxis("Horizontal").ToString("0.00") + "\n" +
-        "Vertical: " + Input.GetAxis("Vertical").ToString("0.00");
+        "Vertical: " + Input.GetAxis("Vertical").ToString("0.00") + "\n" +
+        "Velocity: " + cmp_rb.velocity + "\n" +
+        "Speed: " + cmp_rb.velocity.magnitude.ToString("000");
     }
    
     public void Update() {
