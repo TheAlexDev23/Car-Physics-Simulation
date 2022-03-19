@@ -58,7 +58,7 @@ public class MainCarSimulationScript : MonoBehaviour {
 
         Flong = Ftraction + Fdrag + Frr + Fbraking;
 
-        cmp_rb.AddForce(Flateral);
+        cmp_rb.AddForce(go_wheelsGameObjects[3].transform.forward * _var_EngineForce + Frr);
         cmp_rb.AddForce(Flong);
     }
 
@@ -72,11 +72,20 @@ public class MainCarSimulationScript : MonoBehaviour {
 
         var circleRadius = var_RearFrontAxleOffset / Mathf.Sin(angle * Mathf.Deg2Rad);
 
+        var _angle = transform.rotation.eulerAngles.y + angle;
+
+        /*
         var v1 = new Vector3(Mathf.Cos(angle) * circleRadius, 0, Mathf.Sin(angle) * circleRadius);
         var v2 = new Vector3(Mathf.Cos((angle + Time.deltaTime) * Mathf.Deg2Rad) * circleRadius, 
                             0, 
                             Mathf.Sin((angle + Time.deltaTime) * Mathf.Deg2Rad) * circleRadius);
-
+        */
+        
+        var v1 = new Vector3(Mathf.Cos(_angle) * circleRadius, 0, Mathf.Sin(_angle) * circleRadius);
+        var v2 = new Vector3(Mathf.Cos((_angle + Time.deltaTime) * Mathf.Deg2Rad) * circleRadius, 
+                            0, 
+                            Mathf.Sin((_angle + Time.deltaTime) * Mathf.Deg2Rad) * circleRadius);
+        
         Flateral = (v2 - v1);
 
         //Flateral = v2 - v1;
@@ -85,7 +94,11 @@ public class MainCarSimulationScript : MonoBehaviour {
     }
 
     private void SimulateCarRotation(Vector3 rotationAngle) {
-        var _angle = Vector3.Angle(transform.forward, rotationAngle);
+        var angleMultiplier = 0;
+        if (Input.GetAxis("Horizontal") < 0) angleMultiplier = -1;
+        if (Input.GetAxis("Horizontal") > 0) angleMultiplier = 1;
+
+        var _angle = Vector3.Angle(transform.forward, go_wheelsGameObjects[3].transform.forward) * angleMultiplier;
         var rotationVector = new Vector3(0, _angle, 0);
 
         transform.Rotate(rotationVector * Time.deltaTime);
@@ -119,7 +132,9 @@ public class MainCarSimulationScript : MonoBehaviour {
         "Lateral: " + Flateral + "\n" +
         "Other values: \n" +
         "Engine force (N): " + _var_EngineForce + "\n" +
-        "Is Braking (T/F): " + var_isBraking;
+        "Is Braking (T/F): " + var_isBraking + "\n" +
+        "Horizontal: " + Input.GetAxis("Horizontal").ToString("0.00") + "\n" +
+        "Vertical: " + Input.GetAxis("Vertical").ToString("0.00");
     }
    
     public void Update() {
