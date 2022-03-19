@@ -7,7 +7,8 @@ public class MainCarSimulationScript : MonoBehaviour {
     public void Start() {
         cmp_rb = GetComponent<Rigidbody>();
         
-        /*Air density (rho) is 1.29 kg/m3 (0.0801 lb-mass/ft3), 
+        /*
+        Air density (rho) is 1.29 kg/m3 (0.0801 lb-mass/ft3), 
         frontal area is approx. 2.2 m2 (20 sq. feet), 
         Coefficient of friction depends on the shape of the car and determined via wind tunnel tests.  
         Approximate value for a Corvette: 0.30
@@ -57,13 +58,6 @@ public class MainCarSimulationScript : MonoBehaviour {
         Ftraction = _var_EngineForce * u;
         Fdrag     = -cnst_Cdrag * velocity * velocity.magnitude; 
         Frr       = -cnst_Crr * velocity;
-
-        /*
-        if(var_isBraking)
-            Fbraking  = -u * cnst_Cbraking * Mathf.Clamp(localVel.z, 0, 1);
-        else 
-            Fbraking = Vector3.zero;
-        */
 
         if(var_isBraking)
             Fbraking  = -cmp_rb.velocity / 5 * cnst_Cbraking * Mathf.Clamp(cmp_rb.velocity.magnitude, 0, 1);
@@ -133,11 +127,9 @@ public class MainCarSimulationScript : MonoBehaviour {
         
         if (Input.GetKeyDown(KeyCode.Space)) {
             var_isBraking = true;
-            //var_EngineForce -= cnst_Cbraking;
         }
         if (Input.GetKeyUp(KeyCode.Space)) {
             var_isBraking = false;
-            //var_EngineForce += cnst_Cbraking;
         }
     }
 }
