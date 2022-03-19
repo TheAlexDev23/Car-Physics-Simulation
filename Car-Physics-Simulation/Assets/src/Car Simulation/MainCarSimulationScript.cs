@@ -16,6 +16,8 @@ public class MainCarSimulationScript : MonoBehaviour {
         cnst_Crr   = 12.8f;   //30 * Cdrag
 
         GetWheels();
+
+        Time.fixedDeltaTime /= 5;
     }
 
     private GameObject go_WheelsParentGameObject;
@@ -125,11 +127,11 @@ public class MainCarSimulationScript : MonoBehaviour {
         
         if (Input.GetKeyDown(KeyCode.Space)) {
             var_isBraking = true;
-            var_EngineForce -= cnst_Cbraking;
+            //var_EngineForce -= cnst_Cbraking;
         }
         if (Input.GetKeyUp(KeyCode.Space)) {
             var_isBraking = false;
-            var_EngineForce += cnst_Cbraking;
+            //var_EngineForce += cnst_Cbraking;
         }
     }
 }
