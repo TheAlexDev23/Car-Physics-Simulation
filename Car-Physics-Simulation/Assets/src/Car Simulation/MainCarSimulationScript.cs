@@ -62,45 +62,12 @@ public class MainCarSimulationScript : MonoBehaviour {
         cmp_rb.AddForce(Flong);
     }
 
-    private float angle;
-    public float var_RearFrontAxleOffset;
-    private void SimulateRotation() {
-        if(angle == 0){
-            Flateral = Vector3.zero;
-            return;
-        }
-
-        var circleRadius = var_RearFrontAxleOffset / Mathf.Sin(angle * Mathf.Deg2Rad);
-
-        var _angle = transform.rotation.eulerAngles.y + angle;
-
-        /*
-        var v1 = new Vector3(Mathf.Cos(angle) * circleRadius, 0, Mathf.Sin(angle) * circleRadius);
-        var v2 = new Vector3(Mathf.Cos((angle + Time.deltaTime) * Mathf.Deg2Rad) * circleRadius, 
-                            0, 
-                            Mathf.Sin((angle + Time.deltaTime) * Mathf.Deg2Rad) * circleRadius);
-        */
-        
-        var v1 = new Vector3(Mathf.Cos(_angle) * circleRadius, 0, Mathf.Sin(_angle) * circleRadius);
-        var v2 = new Vector3(Mathf.Cos((_angle + Time.deltaTime) * Mathf.Deg2Rad) * circleRadius, 
-                            0, 
-                            Mathf.Sin((_angle + Time.deltaTime) * Mathf.Deg2Rad) * circleRadius);
-        
-        Flateral = (v2 - v1);
-
-        //Flateral = v2 - v1;
-       
-        SimulateCarRotation(Flateral);
-    }
-
-    private void SimulateCarRotation(Vector3 rotationAngle) {
+    private void SimulateCarRotation() {
         var angleMultiplier = 0;
         if (Input.GetAxis("Horizontal") < 0) angleMultiplier = -1;
         if (Input.GetAxis("Horizontal") > 0) angleMultiplier = 1;
 
         var _angle = Vector3.Angle(transform.forward, go_wheelsGameObjects[3].transform.forward) * angleMultiplier;
-        
-        //var _angle = Vector3.Angle(transform.forward, cmp_rb.velocity) * angleMultiplier;
         
         var rotationVector = new Vector3(0, _angle, 0);
 
@@ -119,7 +86,7 @@ public class MainCarSimulationScript : MonoBehaviour {
 
         var Horizontal = Mathf.Clamp(Input.GetAxis("Horizontal"), -0.85f, 0.85f);
 
-        angle = 90 - Mathf.Acos(Horizontal) * Mathf.Rad2Deg;
+        var angle = 90 - Mathf.Acos(Horizontal) * Mathf.Rad2Deg;
 
         if((int)angle == 0) angle = 0;
 
@@ -148,7 +115,9 @@ public class MainCarSimulationScript : MonoBehaviour {
    
     public void Update() {
         UpdateWheelAngle();
+        SimulateCarRotation();
         UpdateDebugInfo();
+        
         if (Input.GetKeyDown(KeyCode.Space)) {
             var_isBraking = true;
             var_EngineForce -= cnst_Cbraking;
