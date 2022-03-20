@@ -21,7 +21,7 @@ public class StraightLineCarSimulationScript : MonoBehaviour {
     
     [SerializeField]  private int var_rpm; //Max RPM
     [SerializeField]  private int var_accelerationRpmMultiplier; //RPM added per second when fully pressed "W" key
-    [HideInInspector] public int _var_rpm; //Current RPM
+    public int _var_rpm; //Current RPM
     [SerializeField]  private AnimationCurve var_RpmToTorque; //Conversion curve between RPM and torque
     [HideInInspector] public float _var_EngineForce; //Curent torque force applied to the car
     [HideInInspector] public bool var_isBraking;
@@ -54,5 +54,13 @@ public class StraightLineCarSimulationScript : MonoBehaviour {
         Flong = Ftraction + Fdrag + Frr + Fbraking;
 
         cmp_rb.AddForce(Flong);
+    }
+
+    private void Update() {
+        var go_WheelsParentGameObject = GameObject.Find("Wheels");
+        go_WheelsParentGameObject.transform.position = transform.position;
+        go_WheelsParentGameObject.transform.rotation = transform.rotation;
+
+        SimulatePhyisics();
     }
 }
