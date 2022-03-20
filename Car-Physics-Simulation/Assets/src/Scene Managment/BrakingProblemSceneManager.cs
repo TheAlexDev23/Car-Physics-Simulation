@@ -25,7 +25,7 @@ public class BrakingProblemSceneManager : MonoBehaviour {
         loadingProgress = (UiSceneLoadingOperation.progress + LightingSceneLoadingOperation.progress + GameSceneLoadingOperation.progress) / 3f;
         progressSlider.value = loadingProgress;
         if (UiSceneLoadingOperation.isDone && LightingSceneLoadingOperation.isDone && GameSceneLoadingOperation.isDone) {
-            SceneManager.UnloadSceneAsync("__SceneManager_FreeDrive");
+            SceneManager.UnloadSceneAsync("__SceneManager_BrakingProblem");
         }
     }
 }

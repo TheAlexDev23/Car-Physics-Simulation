@@ -6,13 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/__EntryScene.unity
+    guid: d002a8315e6e92f539f0dbc0f0ca48a2
+  - enabled: 1
     path: Assets/Scenes/BrakingProblem/__SceneManager_BrakingProblem.unity
     guid: e64857b55c167633880ea7266316f437
   - enabled: 1
     path: Assets/Scenes/BrakingProblem/__BrakingProblem.unity
     guid: 1c67efb6f6b67a8f7a10638ed0e900ef
   - enabled: 1
-    path: Assets/Scenes/BrakingProblem/__MapParts_FreeDrive.unity
+    path: Assets/Scenes/BrakingProblem/__MapParts_BrakingProblem.unity
     guid: d8edea1a9a32458c0bbe84cf4ffd4042
   - enabled: 1
     path: Assets/Scenes/BrakingProblem/__UI_BrakingProblem.unity

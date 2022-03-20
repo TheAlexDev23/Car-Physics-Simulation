@@ -58,8 +58,8 @@ public class BrakingProblemDebugText : MonoBehaviour {
             "Speed: " + car.gameObject.GetComponent<Rigidbody>().velocity.magnitude.ToString("000") + "\n\n" +
             "Reaction Time: " + reactionTime + "\n" +
             "Reaction Distance: " + reactionDistance + "\n" + 
-            "Breaking Time: " + stoppingDistance + "\n" +
-            "Breaking Distance: " + stoppingTime + "\n\n" +
+            "Breaking Time: " + stoppingTime + "\n" +
+            "Breaking Distance: " + stoppingDistance + "\n\n" +
             "Stopping Time (Reaction Time + Breaking Time): " + stoppingTimeTotal + "\n" +
             "Stopping Distance (Reaction Distance + Breaking Distance): " + stoppingDistanceTotal; 
         }

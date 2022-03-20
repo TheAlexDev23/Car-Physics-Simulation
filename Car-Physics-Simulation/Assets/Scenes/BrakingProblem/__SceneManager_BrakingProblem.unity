@@ -620,7 +620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UiScene: __UI_BrakingProblem
   GameScene: __BrakingProblem
-  MapPartsScene: __MapParts_FreeDrive
+  MapPartsScene: __MapParts_BrakingProblem
 --- !u!4 &1145226139
 Transform:
   m_ObjectHideFlags: 0
