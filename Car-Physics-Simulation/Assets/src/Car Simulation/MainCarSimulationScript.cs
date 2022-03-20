@@ -53,7 +53,6 @@ public class MainCarSimulationScript : MonoBehaviour {
     private void SimulatePhyisics() {
         var u = transform.forward; 
         var velocity = cmp_rb.velocity;
-        var localVel = transform.InverseTransformDirection(velocity);
 
         //Calculation of forces
         _var_EngineForce = var_EngineForce * Input.GetAxis("Vertical");
@@ -75,10 +74,15 @@ public class MainCarSimulationScript : MonoBehaviour {
 
     private void SimulateCarRotation() {
         var angleMultiplier = 0;
+        var directionAngleMultiplier = 0;
+
         if (Input.GetAxis("Horizontal") < 0) angleMultiplier = -1;
         if (Input.GetAxis("Horizontal") > 0) angleMultiplier = 1;
 
-        var _angle = Vector3.Angle(transform.forward, go_wheelsGameObjects[3].transform.forward) * angleMultiplier;
+        if (Input.GetAxis("Vertical") > 0) directionAngleMultiplier = 1;
+        if (Input.GetAxis("Vertical") < 0) directionAngleMultiplier = -1;
+
+        var _angle = Vector3.Angle(transform.forward, go_wheelsGameObjects[3].transform.forward) * angleMultiplier * directionAngleMultiplier;
         
         var rotationVector = new Vector3(0, _angle, 0);
 
