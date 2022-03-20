@@ -2,19 +2,20 @@ using UnityEngine;
 using TMPro;
 
 public class UpdateCarDebugInfo : MonoBehaviour {
+    private bool straightLine;
     public void Start() {
-        cmp_carSimulationScript = GetComponent<MainCarSimulationScript>();
+        straightLine = !TryGetComponent(out cmp_carSimulationScript);
         cmp_rb = GetComponent<Rigidbody>();
     }
 
     public void Update() {
-        UpdateDebugInfo();
+        if (!straightLine) UpdateDebugInfo();
     }
     
     private MainCarSimulationScript cmp_carSimulationScript;
     private Rigidbody cmp_rb;
     private void UpdateDebugInfo() {
-        var text = GameObject.Find("Debug Canvas").transform.Find("Debug Text CarSimulationScript").GetComponent<TextMeshProUGUI>();
+        var text = GameObject.Find("---- UI ----").transform.Find("Debug Canvas").transform.Find("Debug Text CarSimulationScript").GetComponent<TextMeshProUGUI>();
 
         text.text = 
         "Traction: " + cmp_carSimulationScript.Ftraction + "\n" +
