@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class FreeDriveSceneManager : MonoBehaviour {
+public class BrakingProblemSceneManager : MonoBehaviour {
     [SerializeField] private string UiScene; 
     [SerializeField] private string GameScene;
     [SerializeField] private string MapPartsScene;

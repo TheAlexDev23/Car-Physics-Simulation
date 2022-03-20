@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/BrakingProblem/__SceneManager_FreeDrive.unity
+    path: Assets/Scenes/BrakingProblem/__SceneManager_BrakingProblem.unity
     guid: e64857b55c167633880ea7266316f437
   - enabled: 1
     path: Assets/Scenes/BrakingProblem/__BrakingProblem.unity

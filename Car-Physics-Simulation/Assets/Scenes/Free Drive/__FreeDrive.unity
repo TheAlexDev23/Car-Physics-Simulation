@@ -2498,7 +2498,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.1503906, y: 1}
+    m_SensorSize: {x: 2.1420233, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2836,9 +2836,100 @@ MonoBehaviour:
   Frr: {x: 0, y: 0, z: 0}
   Fbraking: {x: 0, y: 0, z: 0}
   Flong: {x: 0, y: 0, z: 0}
-  var_EngineForce: 1800
+  var_rpm: 7000
+  var_accelerationRpmMultiplier: 3000
+  _var_rpm: 0
+  var_RpmToTorque:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.58915854
+      value: -0.0014533941
+      inSlope: -Infinity
+      outSlope: -Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9206759
+      value: 0.42519426
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1.7442937
+      value: 0.8708155
+      inSlope: -0.004950813
+      outSlope: -0.004950813
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.38430047
+    - serializedVersion: 3
+      time: 3.4168348
+      value: 1.4546157
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 5.110937
+      value: 2.2339325
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 6.0750976
+      value: 3.2270484
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 6.5312996
+      value: 3.7860703
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 6.8598566
+      value: 4.78474
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _var_EngineForce: 0
   var_isBraking: 0
+  var_turboBoostAmount: 1000
+  cnst_Cbraking: 1200
 --- !u!114 &2099838218
 MonoBehaviour:
   m_ObjectHideFlags: 0

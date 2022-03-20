@@ -61,14 +61,14 @@ public class MainCarSimulationScript : MonoBehaviour {
         Fdrag     = -cnst_Cdrag * velocity * velocity.magnitude;  //Drag is the air resistance
         Frr       = -cnst_Crr * velocity; //Rolling Resistance is the resistance caused by the friction of the wheels with the ground
 
-        if(var_isBraking)
+        if (var_isBraking)
             Fbraking  = -cmp_rb.velocity / 5 * cnst_Cbraking * Mathf.Clamp(cmp_rb.velocity.magnitude, 0, 1); //if velocity is 0, then braking force would also be 0 on all axis
         else 
             Fbraking = Vector3.zero;
         
         Flong = Ftraction + Fdrag + Frr + Fbraking;
 
-        if(Input.GetAxis("Horizontal") != 0) cmp_rb.AddForce(go_wheelsGameObjects[3].transform.forward * _var_EngineForce + Frr);
+        if (Input.GetAxis("Horizontal") != 0) cmp_rb.AddForce(go_wheelsGameObjects[3].transform.forward * _var_EngineForce + Frr);
         cmp_rb.AddForce(Flong);
     }
 
@@ -104,7 +104,7 @@ public class MainCarSimulationScript : MonoBehaviour {
 
         var angle = 90 - Mathf.Acos(Horizontal) * Mathf.Rad2Deg;
 
-        if((int)angle == 0) angle = 0;
+        if ((int)angle == 0) angle = 0;
 
         var wheelRotationVector = new Vector3(0, angle, 0);
 
@@ -118,12 +118,12 @@ public class MainCarSimulationScript : MonoBehaviour {
         if (Input.GetAxis("Vertical") == 0 && _var_rpm > 0) _var_rpm -= (int)(var_accelerationRpmMultiplier * Time.deltaTime);
         if (Input.GetAxis("Vertical") == 0 && _var_rpm < 0) _var_rpm += (int)(var_accelerationRpmMultiplier * Time.deltaTime);
     }
-   
+
     public void Update() {
         UpdateWheelAngle();
         SimulateCarRotation();
         GetRpmAndTorque();
-        
+
         if (Input.GetKeyDown(KeyCode.Space)) 
             var_isBraking = true;
         if (Input.GetKeyUp(KeyCode.Space))
