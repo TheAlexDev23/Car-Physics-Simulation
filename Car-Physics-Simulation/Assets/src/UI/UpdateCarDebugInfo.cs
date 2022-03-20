@@ -27,6 +27,7 @@ public class UpdateCarDebugInfo : MonoBehaviour {
         "Horizontal: " + Input.GetAxis("Horizontal").ToString("0.00") + "\n" +
         "Vertical: " + Input.GetAxis("Vertical").ToString("0.00") + "\n" +
         "Velocity: " + cmp_rb.velocity + "\n" +
-        "Speed: " + cmp_rb.velocity.magnitude.ToString("000");
+        "Speed: " + cmp_rb.velocity.magnitude.ToString("000") + "\n" +
+        "RPM: " + Mathf.Abs(cmp_carSimulationScript._var_rpm);
     }
 }

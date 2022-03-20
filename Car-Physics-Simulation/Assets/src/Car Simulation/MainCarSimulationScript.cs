@@ -43,6 +43,10 @@ public class MainCarSimulationScript : MonoBehaviour {
     [HideInInspector] public Vector3 Flong; //The total longtitudinal force
     
     [SerializeField]  private float var_EngineForce;
+    [SerializeField]  private int var_rpm;
+    [SerializeField]  private int var_accelerationRpmMultiplier;
+    [HideInInspector] public int _var_rpm;
+    [SerializeField]  private AnimationCurve var_RpmToTorque;
     [HideInInspector] public float _var_EngineForce;
     [HideInInspector] public bool var_isBraking;
     
@@ -55,7 +59,11 @@ public class MainCarSimulationScript : MonoBehaviour {
         var velocity = cmp_rb.velocity;
 
         //Calculation of forces
-        _var_EngineForce = var_EngineForce * Input.GetAxis("Vertical");
+        //_var_EngineForce = var_EngineForce * Input.GetAxis("Vertical");
+        if (_var_rpm > 0) 
+            _var_EngineForce = 1000 * var_RpmToTorque.Evaluate(_var_rpm / 100);
+        else 
+            _var_EngineForce = -1000 * var_RpmToTorque.Evaluate(-_var_rpm / 100);
 
         Ftraction = _var_EngineForce * u;
         Fdrag     = -cnst_Cdrag * velocity * velocity.magnitude; 
@@ -79,8 +87,8 @@ public class MainCarSimulationScript : MonoBehaviour {
         if (Input.GetAxis("Horizontal") < 0) angleMultiplier = -1;
         if (Input.GetAxis("Horizontal") > 0) angleMultiplier = 1;
 
-        if (Input.GetAxis("Vertical") > 0) directionAngleMultiplier = 1;
-        if (Input.GetAxis("Vertical") < 0) directionAngleMultiplier = -1;
+        if (Input.GetAxis("Vertical") >= 0) directionAngleMultiplier = 1;
+        if (Input.GetAxis("Vertical") < 0)  directionAngleMultiplier = -1;
 
         var _angle = Vector3.Angle(transform.forward, go_wheelsGameObjects[3].transform.forward) * angleMultiplier * directionAngleMultiplier;
         
@@ -109,10 +117,18 @@ public class MainCarSimulationScript : MonoBehaviour {
 
         go_wheelsGameObjects[2].transform.localEulerAngles = go_wheelsGameObjects[3].transform.localEulerAngles = wheelRotationVector;
     }
+
+    private void GetRpmAndTorque() {
+        _var_rpm += (int)(var_accelerationRpmMultiplier * Input.GetAxis("Vertical") * Time.deltaTime);
+        _var_rpm = Mathf.Clamp(_var_rpm, -var_rpm, var_rpm);
+
+        if (Input.GetAxis("Vertical") == 0 && _var_rpm > 0) _var_rpm -= (int)(var_accelerationRpmMultiplier * Time.deltaTime);
+    }
    
     public void Update() {
         UpdateWheelAngle();
         SimulateCarRotation();
+        GetRpmAndTorque();
         
         if (Input.GetKeyDown(KeyCode.Space)) {
             var_isBraking = true;
