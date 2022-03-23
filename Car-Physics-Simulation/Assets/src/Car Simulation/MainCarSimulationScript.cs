@@ -65,7 +65,8 @@ public class MainCarSimulationScript : MonoBehaviour {
             Fbraking  = -cmp_rb.velocity / 5 * cnst_Cbraking * Mathf.Clamp(cmp_rb.velocity.magnitude, 0, 1); //if velocity is 0, then braking force would also be 0 on all axis
         else 
             Fbraking = Vector3.zero;
-        
+
+
         Flong = Ftraction + Fdrag + Frr + Fbraking;
 
         if (Input.GetAxis("Horizontal") != 0) cmp_rb.AddForce(go_wheelsGameObjects[3].transform.forward * _var_EngineForce + Frr);
