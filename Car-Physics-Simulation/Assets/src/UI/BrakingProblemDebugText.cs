@@ -21,6 +21,7 @@ public class BrakingProblemDebugText : MonoBehaviour {
 
     private void Update() {
         var car  = GameObject.Find("Car").GetComponent<StraightLineCarSimulationScript>();
+        //We're driving normally, without reacting or breaking
         if (!IsReacting && !IsBreaking)  {
             Guitext.text = 
             "RPM: " + car._var_rpm + "\n" +
@@ -30,6 +31,7 @@ public class BrakingProblemDebugText : MonoBehaviour {
             "Braking Force: " + car.Fbraking + "\n" +
             "Time elapsed: " + Time.time.ToString("000.000");
         } else if (IsReacting) {
+            //During this time the driver is reacting to the obstacle
             reactionTime += Time.deltaTime;
             reactionDistance += car.gameObject.GetComponent<Rigidbody>().velocity.magnitude * Time.deltaTime;
 
@@ -38,6 +40,7 @@ public class BrakingProblemDebugText : MonoBehaviour {
             "Reaction Time: " + reactionTime + "\n" +
             "ReactionDistane: " + reactionDistance;
         } else if (IsBreaking && (int)car.gameObject.GetComponent<Rigidbody>().velocity.magnitude > 0) {
+            //During this time the driver is pressing the brakes and the car still hasn't stopped moving
             car.var_isBraking = true;
             stoppingDistance += car.gameObject.GetComponent<Rigidbody>().velocity.magnitude * Time.deltaTime;
             stoppingTime += Time.deltaTime;
@@ -54,6 +57,7 @@ public class BrakingProblemDebugText : MonoBehaviour {
             "Stopping Time (Reaction Time + Breaking Time): " + (float)(reactionTime + stoppingTime) + "\n" +
             "Stopping Distance (Reaction Distance + Breaking Distance): " + (float)(reactionDistance + stoppingDistance); 
         } else if (!((int)car.gameObject.GetComponent<Rigidbody>().velocity.magnitude > 0)) {
+            //If we are braking and the speed reaches 0, then means that we stopped. 
             Guitext.text = 
             "Speed: " + car.gameObject.GetComponent<Rigidbody>().velocity.magnitude.ToString("000") + "\n\n" +
             "Reaction Time: " + reactionTime + "\n" +
